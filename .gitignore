@@ -1,0 +1,11 @@
+.cache/
+.lsp-session-v1
+auto-save-list/
+eclipse.jdt.ls/
+eln-cache/
+elpa/
+init.el~
+projectile-bookmarks.eld
+projects
+transient/
+workspace/
