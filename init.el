@@ -538,6 +538,9 @@
 
 (global-set-key [escape] 'keyboard-escape-quit)
 
+;; M-x nerd-icons-install-fonts will download fonts here ~/.local/share/fonts
+;; Then all the flycheck icons and mode icons will work
+
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1)
