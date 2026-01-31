@@ -832,6 +832,9 @@
 ;;; init.el ends here
 (put 'dired-find-alternate-file 'disabled nil)
 
+(use-package lsp-mode :hook ((lsp-mode . lsp-enable-which-key-integration)))
+(use-package lsp-java :config (add-hook 'java-mode-hook 'lsp))
+
 ;; M-x nerd-icons-install-fonts
 ;; M-x all-the-icons-install-fonts
 ;; will download fonts here ~/.local/share/fonts/
