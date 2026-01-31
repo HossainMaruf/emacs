@@ -304,7 +304,7 @@
     "d w" '(wdired-change-to-wdired-mode :wk "Writable dired"))
 
   (dt/leader-keys
-    "e" '(:ignore t :wk "Ediff/Eshell/Eval/EWW")    
+    "e" '(:ignore t :wk "Ediff/Eshell/Eval/EWW")
     "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
     "e d" '(eval-defun :wk "Evaluate defun containing or after point")
     "e e" '(eval-expression :wk "Evaluate and elisp expression")
@@ -319,17 +319,17 @@
     "e w" '(eww :which-key "EWW emacs web wowser"))
 
   (dt/leader-keys
-    "f" '(:ignore t :wk "Files")    
+    "f" '(:ignore t :wk "Files")
     "f c" '((lambda () (interactive)
-              (find-file "~/.config/emacs/config.org")) 
+              (find-file "~/.config/emacs/config.org"))
             :wk "Open emacs config.org")
     "f e" '((lambda () (interactive)
-              (dired "~/.config/emacs/")) 
+              (dired "~/.config/emacs/"))
             :wk "Open user-emacs-directory in dired")
     "f d" '(find-grep-dired :wk "Search for string in files in DIR")
     "f g" '(counsel-grep-or-swiper :wk "Search for string current file")
     "f i" '((lambda () (interactive)
-              (find-file "~/.config/emacs/init.el")) 
+              (find-file "~/.config/emacs/init.el"))
             :wk "Open emacs init.el")
     "f j" '(counsel-file-jump :wk "Jump to a file below current directory")
     "f l" '(counsel-locate :wk "Locate a file")
@@ -338,16 +338,16 @@
     "f U" '(sudo-edit :wk "Sudo edit file"))
 
   (dt/leader-keys
-    "g" '(:ignore t :wk "Git")    
+    "g" '(:ignore t :wk "Git")
     "g /" '(magit-dispatch :wk "Magit dispatch")
     "g ." '(magit-file-dispatch :wk "Magit file dispatch")
     "g b" '(magit-branch-checkout :wk "Switch branch")
-    "g c" '(:ignore t :wk "Create") 
+    "g c" '(:ignore t :wk "Create")
     "g c b" '(magit-branch-and-checkout :wk "Create branch and checkout")
     "g c c" '(magit-commit-create :wk "Create commit")
     "g c f" '(magit-commit-fixup :wk "Create fixup commit")
     "g C" '(magit-clone :wk "Clone repo")
-    "g f" '(:ignore t :wk "Find") 
+    "g f" '(:ignore t :wk "Find")
     "g f c" '(magit-show-commit :wk "Show commit")
     "g f f" '(magit-find-file :wk "Magit find file")
     "g f g" '(magit-find-git-config-file :wk "Find gitconfig file")
@@ -419,7 +419,7 @@
     "o f" '(make-frame :wk "Open buffer in new frame")
     "o F" '(select-frame-by-name :wk "Select frame by name"))
 
-  ;; projectile-command-map already has a ton of bindings 
+  ;; projectile-command-map already has a ton of bindings
   ;; set for us, so no need to specify each individually.
   (dt/leader-keys
     "p" '(projectile-command-map :wk "Projectile"))
@@ -498,7 +498,7 @@
 (use-package counsel
   :after ivy
   :diminish
-  :config 
+  :config
     (counsel-mode)
     (setq ivy-initial-inputs-alist nil)) ;; removes starting ^ regex in M-x
 
@@ -538,8 +538,6 @@
 
 (global-set-key [escape] 'keyboard-escape-quit)
 
-;; M-x nerd-icons-install-fonts will download fonts here ~/.local/share/fonts
-;; Then all the flycheck icons and mode icons will work
 
 (use-package doom-modeline
   :ensure t
@@ -819,3 +817,8 @@
   (message "You choose `%s'" choice))
 ;;; init.el ends here
 (put 'dired-find-alternate-file 'disabled nil)
+
+;; M-x nerd-icons-install-fonts
+;; M-x all-the-icons-install-fonts
+;; will download fonts here ~/.local/share/fonts/
+;; Then all the flycheck icons, mode icons, dired icons will work
