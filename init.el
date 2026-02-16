@@ -43,8 +43,6 @@
   :ensure t
   :config (which-key-mode))
 
-(use-package dired)
-
 (add-hook 'prog-mode-hook 'flymake-mode)
 
 (use-package org-bullets
@@ -420,9 +418,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(ace-window all-the-icons-ivy-rich dashboard doom-modeline evil
-		general key-chord org-bullets)))
+ '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
