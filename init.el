@@ -1,18 +1,81 @@
-(add-to-list 'load-path "~/.emacs.d/scripts/")
+;; (setq inhibit-startup-message t)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(set-fringe-mode 20)
+(global-display-line-numbers-mode 1)
+(electric-pair-mode 1)
 
-(require 'elpaca-setup)  ;; The Elpaca Package Manager
-(require 'app-launchers) ;; Use emacs as a run launcher like dmenu (experimental)
-(require 'buffer-move)   ;; Buffer-move for better window management
-(require 'eshell-prompt) ;; A fancy prompt for eshell
+(set-face-attribute 'default nil :font "Monaco" :height 140 :weight 'regular)
+;; (load-theme 'tango-dark t)
 
-(use-package all-the-icons
-  :ensure t
-  :if (display-graphic-p))
+(winner-mode 1)
+(windmove-default-keybindings)
 
-(use-package all-the-icons-dired
-  :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
+(setq make-backup-files nil)
+(setq auto-save-default nil)
 
+(setq indo-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
+
+;; (defalias 'list-buffers 'ibuffer)
+(defalias 'list-buffers 'ibuffer-other-window)
+
+(global-set-key [escape] 'keyboard-escape-quit)
 (setq backup-directory-alist '((".*" . "~/.local/share/Trash/files")))
+
+(require 'package)
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives
+	     '("melpa" . "https://melpa.org/packages/"))
+
+(package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(use-package which-key
+  :ensure t
+  :config (which-key-mode))
+
+(use-package dired)
+;; Dired Improvements
+(setq dired-listing-switches "-alh")
+
+(add-hook 'prog-mode-hook 'flymake-mode)
+
+(use-package org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+(use-package ace-window
+  :ensure t
+  :init
+  (progn
+    (global-set-key [remap other-window] 'ace-window)
+    (custom-set-faces
+     '(aw-leading-char-face
+       ((t (:inherit ace-jump-face-foreground :height 3.0)))))
+    ))
+
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t)
+  (setq evil-undo-system 'undo-redo)
+  :config
+  (evil-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :config
+  ;; (setq evil-collection-mode-list '(calendar dashboard dired ediff info magit ibuffer))
+  (add-to-list 'evil-collection-mode-list 'help) ;; evilify help mode
+  (evil-collection-init))
 
 (use-package company
   :defer 2
@@ -24,11 +87,6 @@
   (company-show-numbers t)
   (company-tooltip-align-annotations 't)
   (global-company-mode t))
-
-(use-package company-box
-  :after company
-  :diminish
-  :hook (company-mode . company-box-mode))
 
 (use-package dashboard
   :ensure t
@@ -51,192 +109,74 @@
   :config
   (dashboard-setup-startup-hook))
 
-;; IMPORTANT: This allows us to use our custom Emacs launchers
-;; without getting the annoying second window created.
-(setq display-buffer-alist
-      '(("^\\(\\*.*\\*\\|Dashboard\\)$"
-         (display-buffer-no-window)
-         (allow-no-window . t))))
-
-(use-package diminish)
-
-(use-package dired-open
-  :config
-  (setq dired-open-extensions '(("gif" . "sxiv")
-                                ("jpg" . "sxiv")
-                                ("png" . "sxiv")
-                                ("mkv" . "mpv")
-                                ("mp4" . "mpv"))))
-
-(use-package peep-dired
-  :after dired
-  :hook (evil-normalize-keymaps . peep-dired-hook)
-  :config
-    (evil-define-key 'normal dired-mode-map (kbd "h") 'dired-up-directory)
-    (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file) ; use dired-find-file instead if not using dired-open package
-    (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
-    (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file)
-)
-
-(use-package drag-stuff
-  :init
-  (drag-stuff-global-mode 1)
-  (drag-stuff-define-keys))
-
-(setq ediff-split-window-function 'split-window-horizontally
-      ediff-window-setup-function 'ediff-setup-windows-plain)
-
-(defun dt-ediff-hook ()
-  (ediff-setup-keymap)
-  (define-key ediff-mode-map "j" 'ediff-next-difference)
-  (define-key ediff-mode-map "k" 'ediff-previous-difference))
-
-(add-hook 'ediff-mode-hook 'dt-ediff-hook)
-
-(use-package elfeed
-  :config
-  (setq elfeed-search-feed-face ":foreground #ffffff :weight bold"
-        elfeed-feeds (quote
-                       (("https://www.reddit.com/r/linux.rss" reddit linux)
-                        ("https://www.reddit.com/r/commandline.rss" reddit commandline)
-                        ("https://www.reddit.com/r/distrotube.rss" reddit distrotube)
-                        ("https://www.reddit.com/r/emacs.rss" reddit emacs)
-                        ("https://www.gamingonlinux.com/article_rss.php" gaming linux)
-                        ("https://hackaday.com/blog/feed/" hackaday linux)
-                        ("https://opensource.com/feed" opensource linux)
-                        ("https://linux.softpedia.com/backend.xml" softpedia linux)
-                        ("https://itsfoss.com/feed/" itsfoss linux)
-                        ("https://www.zdnet.com/topic/linux/rss.xml" zdnet linux)
-                        ("https://www.phoronix.com/rss.php" phoronix linux)
-                        ("http://feeds.feedburner.com/d0od" omgubuntu linux)
-                        ("https://www.computerworld.com/index.rss" computerworld linux)
-                        ("https://www.networkworld.com/category/linux/index.rss" networkworld linux)
-                        ("https://www.techrepublic.com/rssfeeds/topic/open-source/" techrepublic linux)
-                        ("https://betanews.com/feed" betanews linux)
-                        ("http://lxer.com/module/newswire/headlines.rss" lxer linux)
-                        ("https://distrowatch.com/news/dwd.xml" distrowatch linux)))))
- 
-
-(use-package elfeed-goodies
-  :init
-  (elfeed-goodies/setup)
-  :config
-  (setq elfeed-goodies/entry-pane-size 0.5))
-
-(use-package ellama
-  :init
-  (setopt ellama-keymap-prefix "C-c e")  ;; keymap for all ellama functions
-  (setopt ellama-language "English")     ;; language ellama should translate to
-  (require 'llm-ollama)
-  (setopt ellama-provider
-	  (make-llm-ollama
-	   ;; this model should be pulled to use it
-	   ;; value should be the same as you print in terminal during pull
-	   :chat-model "llama3.2"
-	   :embedding-model "nomic-embed-text"
-	   :default-chat-non-standard-params '(("num_ctx" . 8192))))
-  ;; Predefined llm providers for interactive switching.
-  (setopt ellama-providers
-		    '(("zephyr" . (make-llm-ollama
-				   :chat-model "zephyr"
-				   :embedding-model "zephyr"))
-
-		      ("llama3.1" . (make-llm-ollama
-				   :chat-model "llama3.1"
-				   :embedding-model "llama3.1"))
-		      ("mixtral" . (make-llm-ollama
-				    :chat-model "mixtral"
-				    :embedding-model "mixtral"))))
-  (setopt ellama-naming-scheme 'ellama-generate-name-by-llm)
-  ;; Translation llm provider
-  (setopt ellama-translation-provider (make-llm-ollama
-				       :chat-model "mixtral"
-				       :embedding-model "nomic-embed-text"))
-  :config
-  (setq ellama-sessions-directory "~/.config/emacs/ellama-sessions/"
-        ellama-sessions-auto-save t))
-
-(use-package eradio
-  :init
-  (setq eradio-player '("mpv" "--no-video" "--no-terminal"))
-  :config
-  (setq eradio-channels '(("Deep Space One" . "https://somafm.com/deepspaceone130.pls")
-                          ("GrooveSalad" . "https://somafm.com/groovesalad130.pls")
-                          ("Heavyweight Reggae" . "https://somafm.com/reggae130.pls")
-                          ("Left Coast 70s" . "https://somafm.com/seventies130.pls")
-                          ("SonicUniverse" . "https://somafm.com/sonicuniverse130.pls")
-                          ("ThistleRadio Celtic" . "https://somafm.com/thistle130.pls"))))
-
-;; Expands to: (elpaca evil (use-package evil :demand t))
-(use-package evil
-    :init      ;; tweak evil's configuration before loading it
-    (setq evil-want-integration t  ;; This is optional since it's already set to t by default.
-          evil-want-keybinding nil
-          evil-vsplit-window-right t
-          evil-split-window-below t
-          evil-undo-system 'undo-redo)  ;; Adds vim-like C-r redo functionality
-    (evil-mode))
-
-(use-package evil-collection
-  :after evil
-  :config
-  ;; Do not uncomment this unless you want to specify each and every mode
-  ;; that evil-collection should works with.  The following line is here
-  ;; for documentation purposes in case you need it.
-  ;; (setq evil-collection-mode-list '(calendar dashboard dired ediff info magit ibuffer))
-  (add-to-list 'evil-collection-mode-list 'help) ;; evilify help mode
-  (evil-collection-init))
-
-(use-package evil-tutor)
-
-;; Using RETURN to follow links in Org/Evil
-;; Unmap keys in 'evil-maps if not done, (setq org-return-follows-link t) will not work
-(with-eval-after-load 'evil-maps
-  (define-key evil-motion-state-map (kbd "SPC") nil)
-  (define-key evil-motion-state-map (kbd "RET") nil)
-  (define-key evil-motion-state-map (kbd "TAB") nil))
-;; Setting RETURN key in org-mode to follow links
-  (setq org-return-follows-link  t)
-
-(use-package flycheck
+(use-package doom-modeline
   :ensure t
-  :defer t
+  :init (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-height 35      ;; sets modeline height
+        doom-modeline-bar-width 5    ;; sets right bar width
+        doom-modeline-persp-name t   ;; adds perspective name to modeline
+        doom-modeline-persp-icon t)) ;; adds folder icon next to persp name
+
+(use-package projectile
+  :config
+  (projectile-mode 1))
+
+(use-package counsel
+  :after ivy
   :diminish
-  :init (global-flycheck-mode))
+  :config
+    (counsel-mode)
+    (setq ivy-initial-inputs-alist nil)) ;; removes starting ^ regex in M-x
 
-(set-face-attribute 'default nil
-  :font "Monaco"
-  :height 120
-  :weight 'regular)
-(set-face-attribute 'variable-pitch nil
-  :font "FiraCode Nerd Font"
-  :height 120
-  :weight 'regular)
-(set-face-attribute 'fixed-pitch nil
-  :font "Ubuntu"
-  :height 120
-  :weight 'regular)
-;; Makes commented text and keywords italics.
-;; This is working in emacsclient but not emacs.
-;; Your font must have an italic face available.
-(set-face-attribute 'font-lock-comment-face nil
-  :slant 'italic)
-(set-face-attribute 'font-lock-keyword-face nil
-  :slant 'italic)
+(use-package ivy
+  :bind
+  ;; ivy-resume resumes the last Ivy-based completion.
+  (
+   ("C-s" . swiper)
+   ("C-c C-r" . ivy-resume)
+   ("C-x B" . ivy-switch-buffer-other-window)
+   :map ivy-minibuffer-map
+    ("TAB" . ivy-alt-done)
+    ("C-l" . ivy-alt-done)
+    ("C-j" . ivy-next-line)
+    ("C-k" . ivy-previous-line)
+    :map ivy-switch-buffer-map
+    ("C-k" . ivy-previous-line)
+    ("C-j" . ivy-done)
+    ("C-d" . ivy-switch-buffer-kill)
+    :map ivy-reverse-i-search-map
+    ("C-k" . ivy-previous-line)
+    ("C-d" . ivy-reverse-i-search-kill))
+  :diminish
+  :custom
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  (setq enable-recursive-minibuffers t)
+  :config
+  (ivy-mode))
 
-;; This sets the default font on all graphical frames created after restarting Emacs.
-;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
-;; are not right unless I also add this method of setting the default font.
-(add-to-list 'default-frame-alist '(font . "Monaco"))
+(use-package ivy-rich
+  :after ivy
+  :ensure t
+  :init (ivy-rich-mode 1) ;; this gets us descriptions in M-x.
+  :custom
+  (ivy-virtual-abbreviate 'full
+   ivy-rich-switch-buffer-align-virtual-buffer t
+   ivy-rich-path-style 'abbrev))
+  ;; :config
+  ;; (ivy-set-display-transformer 'ivy-switch-buffer))
 
-;; Uncomment the following line if line spacing needs adjusting.
-(setq-default line-spacing 0.12)
-(set-face-background 'mouse "#ffffff")
+(use-package all-the-icons-ivy-rich
+  :ensure t
+  :init (all-the-icons-ivy-rich-mode 1))
 
-(global-set-key (kbd "C-=") 'text-scale-increase)
-(global-set-key (kbd "C--") 'text-scale-decrease)
-(global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
-(global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
+(use-package all-the-icons
+  :ensure t
+  :if (display-graphic-p))
+
+(use-package all-the-icons-dired
+  :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
 
 (use-package nerd-icons
   ;; :custom
@@ -263,17 +203,6 @@
     "=" '(perspective-map :wk "Perspective") ;; Lists all the perspective keybindings
     "TAB TAB" '(comment-line :wk "Comment lines")
     "u" '(universal-argument :wk "Universal argument"))
-
-   (dt/leader-keys
-    "a" '(:ignore t :wk "A.I.")
-    "a a" '(ellama-ask-about :wk "Ask ellama about region")
-    "a e" '(:ignore t :wk "Ellama enhance")
-    "a e g" '(ellama-improve-grammar :wk "Ellama enhance wording")
-    "a e w" '(ellama-improve-wording :wk "Ellama enhance grammar")
-    "a i" '(ellama-chat :wk "Ask ellama")
-    "a p" '(ellama-provider-select :wk "Ellama provider select")
-    "a s" '(ellama-summarize :wk "Ellama summarize region")
-    "a t" '(ellama-translate :wk "Ellama translate region"))
    
   (dt/leader-keys
     "b" '(:ignore t :wk "Bookmarks/Buffers")
@@ -474,368 +403,21 @@
     "w =" '(count-words :wk "Count words/lines for buffer"))
 )
 
-(use-package git-timemachine
-  :after git-timemachine
-  :hook (evil-normalize-keymaps . git-timemachine-hook)
-  :config
-    (evil-define-key 'normal git-timemachine-mode-map (kbd "C-j") 'git-timemachine-show-previous-revision)
-    (evil-define-key 'normal git-timemachine-mode-map (kbd "C-k") 'git-timemachine-show-next-revision)
-)
-
-(use-package hl-todo
-  :hook ((org-mode . hl-todo-mode)
-         (prog-mode . hl-todo-mode))
-  :config
-  (setq hl-todo-highlight-punctuation ":"
-        hl-todo-keyword-faces
-        `(("TODO"       warning bold)
-          ("FIXME"      error bold)
-          ("HACK"       font-lock-constant-face bold)
-          ("REVIEW"     font-lock-keyword-face bold)
-          ("NOTE"       success bold)
-          ("DEPRECATED" font-lock-doc-face bold))))
-
-(use-package counsel
-  :after ivy
-  :diminish
-  :config
-    (counsel-mode)
-    (setq ivy-initial-inputs-alist nil)) ;; removes starting ^ regex in M-x
-
-(use-package ivy
-  :bind
-  ;; ivy-resume resumes the last Ivy-based completion.
-  (
-   ("C-s" . swiper)
-   ("C-c C-r" . ivy-resume)
-   ("C-x B" . ivy-switch-buffer-other-window)
-   :map ivy-minibuffer-map
-    ("TAB" . ivy-alt-done)
-    ("C-l" . ivy-alt-done)
-    ("C-j" . ivy-next-line)
-    ("C-k" . ivy-previous-line)
-    :map ivy-switch-buffer-map
-    ("C-k" . ivy-previous-line)
-    ("C-j" . ivy-done)
-    ("C-d" . ivy-switch-buffer-kill)
-    :map ivy-reverse-i-search-map
-    ("C-k" . ivy-previous-line)
-    ("C-d" . ivy-reverse-i-search-kill))
-  :diminish
-  :custom
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) ")
-  (setq enable-recursive-minibuffers t)
-  :config
-  (ivy-mode))
-
-(use-package all-the-icons-ivy-rich
-  :ensure t
-  :init (all-the-icons-ivy-rich-mode 1))
-
-(use-package ivy-rich
-  :after ivy
-  :ensure t
-  :init (ivy-rich-mode 1) ;; this gets us descriptions in M-x.
-  :custom
-  (ivy-virtual-abbreviate 'full
-   ivy-rich-switch-buffer-align-virtual-buffer t
-   ivy-rich-path-style 'abbrev)
-  :config
-  (ivy-set-display-transformer 'ivy-switch-buffer))
-
-;; (use-package dart-mode)
-;; (use-package haskell-mode)
-;; (use-package kdl-mode)
-(use-package lua-mode)
-(use-package php-mode)
-
-(global-set-key [escape] 'keyboard-escape-quit)
-
-
-(use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1)
-  :config
-  (setq doom-modeline-height 35      ;; sets modeline height
-        doom-modeline-bar-width 5    ;; sets right bar width
-        doom-modeline-persp-name t   ;; adds perspective name to modeline
-        doom-modeline-persp-icon t)) ;; adds folder icon next to persp name
-
-(use-package neotree
-  :config
-  (setq neo-smart-open t
-        neo-show-hidden-files t
-        neo-window-width 55
-        neo-window-fixed-size nil
-        inhibit-compacting-font-caches t
-        projectile-switch-project-action 'neotree-projectile-action)
-        ;; truncate long file names in neotree
-        (add-hook 'neo-after-create-hook
-           #'(lambda (_)
-               (with-current-buffer (get-buffer neo-buffer-name)
-                 (setq truncate-lines t)
-                 (setq word-wrap nil)
-                 (make-local-variable 'auto-hscroll-mode)
-                 (setq auto-hscroll-mode nil)))))
-
-;; (setq org-agenda-files '("~/.config/emacs/agenda.org"))
-
-(add-hook 'org-mode-hook 'org-indent-mode)
-(use-package org-bullets)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-
-(eval-after-load 'org-indent '(diminish 'org-indent-mode))
-
-(custom-set-faces
-   '(org-level-1 ((t (:inherit outline-1 :height 1.7))))
-   '(org-level-2 ((t (:inherit outline-2 :height 1.6))))
-   '(org-level-3 ((t (:inherit outline-3 :height 1.5))))
-   '(org-level-4 ((t (:inherit outline-4 :height 1.4))))
-   '(org-level-5 ((t (:inherit outline-5 :height 1.3))))
-   '(org-level-6 ((t (:inherit outline-5 :height 1.2))))
-   '(org-level-7 ((t (:inherit outline-5 :height 1.1)))))
-
-(require 'org-tempo)
-
-(setq org-src-preserve-indentation t)
-
-(use-package toc-org
-    :commands toc-org-enable
-    :init (add-hook 'org-mode-hook 'toc-org-enable))
-
-(use-package ox-hugo
-  :ensure t   ;Auto-install the package from Melpa
-  :after ox)
-
-(use-package pdf-tools
-  :defer t
-  :commands (pdf-loader-install)
-  :mode "\\.pdf\\'"
-  :bind (:map pdf-view-mode-map
-              ("j" . pdf-view-next-line-or-next-page)
-              ("k" . pdf-view-previous-line-or-previous-page)
-              ("C-=" . pdf-view-enlarge)
-              ("C--" . pdf-view-shrink))
-  :init (pdf-loader-install)
-  :config (add-to-list 'revert-without-query ".pdf"))
-
-(add-hook 'pdf-view-mode-hook #'(lambda () (interactive) (display-line-numbers-mode -1)
-                                                         (blink-cursor-mode -1)
-                                                         (doom-modeline-mode -1)))
-
-(use-package perspective
-  :custom
-  ;; NOTE! I have also set 'SCP =' to open the perspective menu.
-  ;; I'm only setting the additional binding because setting it
-  ;; helps suppress an annoying warning message.
-  (persp-mode-prefix-key (kbd "C-c M-p"))
-  :init 
-  (persp-mode)
-  :config
-  ;; Sets a file to write to when we save states
-  (setq persp-state-default-file "~/.config/emacs/sessions"))
-
-;; This will group buffers by persp-name in ibuffer.
-(add-hook 'ibuffer-hook
-          (lambda ()
-            (persp-ibuffer-set-filter-groups)
-            (unless (eq ibuffer-sorting-mode 'alphabetic)
-              (ibuffer-do-sort-by-alphabetic))))
-
-;; Automatically save perspective states to file when Emacs exits.
-(add-hook 'kill-emacs-hook #'persp-state-save)
-
-(use-package projectile
-  :config
-  (projectile-mode 1))
-
-(use-package rainbow-delimiters
-  :hook ((emacs-lisp-mode . rainbow-delimiters-mode)
-         (clojure-mode . rainbow-delimiters-mode)))
-
-(use-package rainbow-mode
-  :diminish
-  :hook org-mode prog-mode)
-
-(delete-selection-mode 1)    ;; You can select text and delete it by typing.
-(electric-indent-mode -1)    ;; Turn off the weird indenting that Emacs does by default.
-(electric-pair-mode 1)       ;; Turns on automatic parens pairing
-;; The following prevents <> from auto-pairing when electric-pair-mode is on.
-;; Otherwise, org-tempo is broken when you try to <s TAB...
-(add-hook 'org-mode-hook (lambda ()
-           (setq-local electric-pair-inhibit-predicate
-                   `(lambda (c)
-                  (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
-(global-auto-revert-mode t)  ;; Automatically show changes if the file has changed
-(global-display-line-numbers-mode 1) ;; Display line numbers
-(global-visual-line-mode t)  ;; Enable truncated lines
-(menu-bar-mode -1)           ;; Disable the menu bar 
-(scroll-bar-mode -1)         ;; Disable the scroll bar
-(tool-bar-mode -1)           ;; Disable the tool bar
-(setq org-edit-src-content-indentation 0) ;; Set src block automatic indent to 0 instead of 2.
-(setq use-file-dialog nil)   ;; No file dialog
-(setq use-dialog-box nil)    ;; No dialog box
-(setq pop-up-windows nil)    ;; No popup windows
-
-;; Disabling company mode in eshell, because it's annoying.
-(setq company-global-modes '(not eshell-mode))
-
-;; Adding a keybinding for 'pcomplete-list' on F9 key.
-(add-hook 'eshell-mode-hook
-          (lambda ()
-            (define-key eshell-mode-map (kbd "<f9>") #'pcomplete-list)))
-
-;; A function for easily creating multiple buffers of 'eshell'.
-;; NOTE: `C-u M-x eshell` would also create new 'eshell' buffers.
-(defun eshell-new (name)
-  "Create new eshell buffer named NAME."
-  (interactive "sName: ")
-  (setq name (concat "$" name))
-  (eshell)
-  (rename-buffer name))
-
-(use-package eshell-toggle
-  :custom
-  (eshell-toggle-size-fraction 3)
-  (eshell-toggle-use-projectile-root t)
-  (eshell-toggle-run-command nil)
-  (eshell-toggle-init-function #'eshell-toggle-init-ansi-term))
-
-  (use-package eshell-syntax-highlighting
-    :after esh-mode
-    :config
-    (eshell-syntax-highlighting-global-mode +1))
-
-  ;; eshell-syntax-highlighting -- adds fish/zsh-like syntax highlighting.
-  ;; eshell-rc-script -- your profile for eshell; like a bashrc for eshell.
-  ;; eshell-aliases-file -- sets an aliases file for the eshell.
-
-  (setq eshell-rc-script (concat user-emacs-directory "eshell/profile")
-        eshell-aliases-file (concat user-emacs-directory "eshell/aliases")
-        eshell-history-size 5000
-        eshell-buffer-maximum-lines 5000
-        eshell-hist-ignoredups t
-        eshell-scroll-to-bottom-on-input t
-        eshell-destroy-buffer-when-process-dies t
-        eshell-visual-commands'("bash" "fish" "htop" "ssh" "top" "zsh"))
-
-(use-package vterm
-  :ensure t
-  :config
-  (setq shell-file-name "/bin/sh"
-        vterm-max-scrollback 5000))
-
-(use-package vterm-toggle
-  :ensure t
-  :after vterm
-  :config
-  ;; When running programs in Vterm and in 'normal' mode, make sure that ESC
-  ;; kills the program as it would in most standard terminal programs.
-  (evil-define-key 'normal vterm-mode-map (kbd "<escape>") 'vterm--self-insert)
-  (setq vterm-toggle-fullscreen-p nil)
-  (setq vterm-toggle-scope 'project)
-  (add-to-list 'display-buffer-alist
-               '((lambda (buffer-or-name _)
-                     (let ((buffer (get-buffer buffer-or-name)))
-                       (with-current-buffer buffer
-                         (or (equal major-mode 'vterm-mode)
-                             (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
-                  (display-buffer-reuse-window display-buffer-at-bottom)
-                  ;;(display-buffer-reuse-window display-buffer-in-direction)
-                  ;;display-buffer-in-direction/direction/dedicated is added in emacs27
-                  ;;(direction . bottom)
-                  ;;(dedicated . t) ;dedicated is supported in emacs27
-                  (reusable-frames . visible)
-                  (window-height . 0.4))))
-
-(use-package sudo-edit)
-
-(add-to-list 'custom-theme-load-path "~/.config/emacs/themes/")
-
-(use-package doom-themes
-  :config
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  ;; Sets the default theme to load!!! 
-  (load-theme 'doom-one t)
-  ;; Enable custom neotree theme (all-the-icons must be installed!)
-  (doom-themes-neotree-config)
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
-
-(use-package tldr)
-
-(add-to-list 'default-frame-alist '(alpha-background . 100)) ; For all new frames henceforth
-
-(use-package which-key
-  :init
-    (which-key-mode 1)
-  :diminish
-  :config
-  (setq which-key-side-window-location 'bottom
-	  which-key-sort-order #'which-key-key-order-alpha
-	  which-key-allow-imprecise-window-fit nil
-	  which-key-sort-uppercase-first nil
-	  which-key-add-column-padding 1
-	  which-key-max-display-columns nil
-	  which-key-min-display-lines 6
-	  which-key-side-window-slot -10
-	  which-key-side-window-max-height 0.25
-	  which-key-idle-delay 0.8
-	  which-key-max-description-length 25
-	  which-key-allow-imprecise-window-fit nil
-	  which-key-separator " → " ))
-
-(defun reader ()
-  (interactive)
-  (let ((choices '(("First"  . "Hi!")
-                   ("Second" . 'second-choice)
-                   ("Third"  . 'third-choice))))
-    (alist-get
-     (completing-read "Choose: " choices)
-     choices nil nil 'message)))
-
-(defun github-code-search ()
-  "Search code on github for a given language."
-  (interactive)
-  (let ((language (completing-read
-                   "Language: "
-                   '("Emacs Lisp" "Python"  "Clojure" "R")))
-        (code (read-string "Code: ")))
-    (browse-url
-     (concat "https://github.com/search?l=" language
-             "&type=code&q=" code))))
-  
-(defun dm-search ()
-  "Search various search engines."
-  (interactive)
-  (let ((engine (completing-read
-                 "Search Engine: "
-                 '("Arch Wiki" 
-                   "Bing"
-                   "Google"
-                   "Wikipedia")))
-        (query (read-string "Query: ")))
-    (if (equal engine "Google")
-      (browse-url
-       (concat "https://www.google.com/search?q=" query)))))
-
-(defun dt/key-value-completing (choice)                                     
-  (interactive
-   (list
-    (let ((completions '(("1" "One") 
-                         ("2" "Two")
-                         ("3" "Three"))))              
-      (cadr (assoc (completing-read "Choose: " completions) completions)))))
-  (message "You choose `%s'" choice))
-;;; init.el ends here
-(put 'dired-find-alternate-file 'disabled nil)
-
 (use-package lsp-mode :hook ((lsp-mode . lsp-enable-which-key-integration)))
 (use-package lsp-java :config (add-hook 'java-mode-hook 'lsp))
 
-;; M-x nerd-icons-install-fonts
-;; M-x all-the-icons-install-fonts
-;; will download fonts here ~/.local/share/fonts/
-;; Then all the flycheck icons, mode icons, dired icons will work
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(all-the-icons-dired all-the-icons-ivy-rich company counsel dashboard
+			 doom-modeline evil evil-collection general
+			 lsp-java org-bullets projectile)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 3.0)))))
