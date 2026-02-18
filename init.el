@@ -1,17 +1,36 @@
-;; (setq inhibit-startup-message t)
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(set-fringe-mode 20)
-(global-display-line-numbers-mode 1)
-(electric-pair-mode 1)
-(hl-line-mode 1)
+;; Startup Disabled Some GUI Elements
+(when window-system
+    ;; (setq inhibit-startup-message t)
+    ;; (setq initial-scratch-message "")
+    ;; (setq initial-major-mode 'fundamental-mode)
+    ;; (setq inhibit-splash-screen t)
+    (menu-bar-mode -1)
+    (tool-bar-mode -1)
+    (scroll-bar-mode -1)
+    (set-fringe-mode 20)
+    (global-display-line-numbers-mode 1)
+    (electric-pair-mode 1)
+    (hl-line-mode 1)
+    (fset 'yes-or-no-p 'y-or-n-p)
+    (column-number-mode 1)
+    (save-place-mode 1)
+    (recentf-mode 1)
+    (winner-mode 1)
+    (windmove-default-keybindings))
 
-(set-face-attribute 'default nil :font "Monaco" :height 130 :weight 'regular)
-;; (load-theme 'tango-dark t)
+;; Initial Window
+(setq initial-frame-alist
+      '((width . 102)   ; characters in a line
+        (height . 54))) ; number of lines
 
-(winner-mode 1)
-(windmove-default-keybindings)
+
+;; Subsequent Frame
+(setq default-frame-alist
+      '((width . 100)   ; characters in a line
+        (height . 52))) ; number of lines
+
+;; (setq visible-bell t)
+(setq doc-view-continuous t)
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
@@ -20,11 +39,16 @@
 (setq ido-everywhere t)
 (ido-mode 1)
 
+(setq backup-directory-alist '((".*" . "~/.local/share/Trash/files")))
+(setq scroll-conservatively 101)
+(setq backup-directory-alist
+      `(("." . ,(expand-file-name "backups/" user-emacs-directory))))
+
 ;; (defalias 'list-buffers 'ibuffer)
 (defalias 'list-buffers 'ibuffer-other-window)
 
 (global-set-key [escape] 'keyboard-escape-quit)
-(setq backup-directory-alist '((".*" . "~/.local/share/Trash/files")))
+(set-face-attribute 'default nil :font "Monaco" :height 130 :weight 'regular)
 
 (add-hook 'prog-mode-hook
           (lambda ()
@@ -42,19 +66,10 @@
              '(("\\<\\(TODO\\|FIXME\\|NOTE\\):"
                 1 font-lock-warning-face t)))))
 
-(setq-default tab-width 4)
-(setq-default standard-indent 4)
-(with-eval-after-load 'eglot
-  (add-hook 'prog-mode-hook 'eglot-ensure))
-
-(fset 'yes-or-no-p 'y-or-n-p)
-(column-number-mode 1)
-(save-place-mode 1)
-(recentf-mode 1)
-(setq scroll-conservatively 101)
-(setq backup-directory-alist
-      `(("." . ,(expand-file-name "backups/" user-emacs-directory))))
-
+            (setq-default tab-width 4)
+            (setq-default standard-indent 4)
+            (with-eval-after-load 'eglot
+            (add-hook 'prog-mode-hook 'eglot-ensure))
 
 (require 'package)
 
@@ -284,6 +299,16 @@
   :ensure t
   :if (display-graphic-p))
 
+(use-package dired
+  :ensure nil
+  :bind (:map dired-mode-map
+             ("C-c C-e" . wdired-change-to-wdired-mode))
+  :init
+  (setq dired-dwim-target t
+        dired-recursive-copies 'top
+        dired-recursive-deletes 'top
+        dired-listing-switches "-alh"))
+
 (use-package all-the-icons-dired
   :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
 
@@ -312,7 +337,7 @@
     "=" '(perspective-map :wk "Perspective") ;; Lists all the perspective keybindings
     "TAB TAB" '(comment-line :wk "Comment lines")
     "u" '(universal-argument :wk "Universal argument"))
-   
+
   (dt/leader-keys
     "b" '(:ignore t :wk "Bookmarks/Buffers")
     "b b" '(switch-to-buffer :wk "Switch to buffer")
@@ -522,8 +547,8 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(all-the-icons-dired all-the-icons-ivy-rich company counsel dashboard
-			 doom-modeline evil-collection general
-			 key-chord lsp-java org-bullets projectile)))
+                         doom-modeline evil-collection general
+                         key-chord lsp-java org-bullets projectile)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
