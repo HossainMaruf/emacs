@@ -5,6 +5,7 @@
 (set-fringe-mode 20)
 (global-display-line-numbers-mode 1)
 (electric-pair-mode 1)
+(hl-line-mode 1)
 
 (set-face-attribute 'default nil :font "Monaco" :height 130 :weight 'regular)
 ;; (load-theme 'tango-dark t)
@@ -25,6 +26,36 @@
 (global-set-key [escape] 'keyboard-escape-quit)
 (setq backup-directory-alist '((".*" . "~/.local/share/Trash/files")))
 
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (display-line-numbers-mode 1)
+            (hl-line-mode 1)
+            (show-paren-mode 1)
+            (electric-pair-mode 1)
+            (electric-indent-mode 1)
+            (setq indent-tabs-mode nil)
+            (auto-revert-mode 1)
+            (flymake-mode -1)
+            (setq show-trailing-whitespace t)
+            (font-lock-add-keywords
+             nil
+             '(("\\<\\(TODO\\|FIXME\\|NOTE\\):"
+                1 font-lock-warning-face t)))))
+
+(setq-default tab-width 4)
+(setq-default standard-indent 4)
+(with-eval-after-load 'eglot
+  (add-hook 'prog-mode-hook 'eglot-ensure))
+
+(fset 'yes-or-no-p 'y-or-n-p)
+(column-number-mode 1)
+(save-place-mode 1)
+(recentf-mode 1)
+(setq scroll-conservatively 101)
+(setq backup-directory-alist
+      `(("." . ,(expand-file-name "backups/" user-emacs-directory))))
+
+
 (require 'package)
 
 (add-to-list 'package-archives
@@ -43,7 +74,69 @@
   :ensure t
   :config (which-key-mode))
 
-(add-hook 'prog-mode-hook 'flymake-mode)
+(use-package org
+  :mode (("\\.org" . org-mode))
+  :init
+  (setq org-return-follows-link t
+        org-adapt-indentation nil
+        org-startup-indented t
+        org-list-indent-offset 2
+        org-edit-src-content-indentation 2
+        org-imenu-depth 4
+        sentence-end-double-space nil
+        org-html-validation-link nil
+        org-export-with-sub-superscripts nil
+        org-export-with-drawers nil
+        org-export-with-author nil
+        org-export-with-email nil
+        org-export-with-date nil
+        org-export-with-todo-keywords nil
+        org-export-with-broken-links nil
+        org-export-with-toc nil
+        org-export-with-date nil
+        org-export-with-title nil
+        org-export-with-section-numbers nil
+        org-export-with-creator nil
+        org-export-with-smart-quotes t
+        org-export-with-timestamps nil
+        org-export-time-stamp-file nil
+        org-export-date-timestamp-format "%e %B %Y"
+
+        org-directory "~/personal"
+        org-default-notes-file "~/personal/general-notes.txt"
+
+        org-enforce-todo-dependencies t
+        org-agenda-dim-blocked-tasks t
+        org-log-done 'time
+
+        org-completion-use-ido t
+        org-outline-path-complete-in-steps nil
+        org-src-tab-acts-natively t
+        org-agenda-span 'day ; Default is 'week
+        org-confirm-babel-evaluate nil
+        org-src-fontify-natively t
+        org-src-tab-acts-natively t
+
+        ;; Updates the lastmod: when set in the file:
+        time-stamp-active t
+        time-stamp-start "#\\+lastmod:[ \t]*"
+        time-stamp-end "$"
+        time-stamp-format "[%04Y-%02m-%02d %a]")
+        (setq org-todo-keywords '((sequence "TODO(t)" "DOING(g)" "|" "DONE(d)")
+                                    (sequence "BLOCKED(b)" "|" "CANCELLED(c)")))
+        (defun ha-org-clock-todo-change ()
+            "Called from hook `org-after-todo-state-change-hook'.
+        Clock in if a task changes to DOING (i.e. IN_PROGRESS),
+        and clocks out with any other state change."
+            (if (string= org-state "DOING")
+                (org-clock-in)
+            (org-clock-out-if-current)))
+
+        (add-hook 'org-after-todo-state-change-hook 'ha-org-clock-todo-change)
+        (setq org-confirm-babel-evaluate nil
+                org-src-fontify-natively t
+                org-src-tab-acts-natively t
+                org-src-window-setup 'current-window))
 
 (use-package org-bullets
   :ensure t
@@ -120,10 +213,19 @@
   :ensure t
   :init (doom-modeline-mode 1)
   :config
-  (setq doom-modeline-height 35      ;; sets modeline height
-        doom-modeline-bar-width 5    ;; sets right bar width
-        doom-modeline-persp-name t   ;; adds perspective name to modeline
-        doom-modeline-persp-icon t)) ;; adds folder icon next to persp name
+  (setq
+        doom-modeline-minor-modes nil
+        doom-modeline-buffer-encoding nil
+        doom-modeline-major-mode-color-icon t
+        doom-modeline-buffer-state-icon t
+        doom-modeline-buffer-modification-icon t
+        doom-modeline-modal 'evil
+        doom-modeline-lsp-icon t
+        doom-modeline-percent-position nil
+        doom-modeline-height 35
+        doom-modeline-bar-width 5
+        doom-modeline-persp-name t
+        doom-modeline-persp-icon t))
 
 (use-package projectile
   :config
@@ -196,7 +298,7 @@
 (use-package general
   :config
   (general-evil-setup)
-  
+
   ;; set up 'SPC' as the global leader key
   (general-create-definer dt/leader-keys
     :states '(normal insert visual emacs)
@@ -418,7 +520,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
+ '(package-selected-packages
+   '(all-the-icons-dired all-the-icons-ivy-rich company counsel dashboard
+			 doom-modeline evil-collection general
+			 key-chord lsp-java org-bullets projectile)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
