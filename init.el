@@ -99,59 +99,7 @@
         org-edit-src-content-indentation 2
         org-imenu-depth 4
         sentence-end-double-space nil
-        org-html-validation-link nil
-        org-export-with-sub-superscripts nil
-        org-export-with-drawers nil
-        org-export-with-author nil
-        org-export-with-email nil
-        org-export-with-date nil
-        org-export-with-todo-keywords nil
-        org-export-with-broken-links nil
-        org-export-with-toc nil
-        org-export-with-date nil
-        org-export-with-title nil
-        org-export-with-section-numbers nil
-        org-export-with-creator nil
-        org-export-with-smart-quotes t
-        org-export-with-timestamps nil
-        org-export-time-stamp-file nil
-        org-export-date-timestamp-format "%e %B %Y"
-
-        org-directory "~/personal"
-        org-default-notes-file "~/personal/general-notes.txt"
-
-        org-enforce-todo-dependencies t
-        org-agenda-dim-blocked-tasks t
-        org-log-done 'time
-
-        org-completion-use-ido t
-        org-outline-path-complete-in-steps nil
-        org-src-tab-acts-natively t
-        org-agenda-span 'day ; Default is 'week
-        org-confirm-babel-evaluate nil
-        org-src-fontify-natively t
-        org-src-tab-acts-natively t
-
-        ;; Updates the lastmod: when set in the file:
-        time-stamp-active t
-        time-stamp-start "#\\+lastmod:[ \t]*"
-        time-stamp-end "$"
-        time-stamp-format "[%04Y-%02m-%02d %a]")
-        (setq org-todo-keywords '((sequence "TODO(t)" "DOING(g)" "|" "DONE(d)")
-                                    (sequence "BLOCKED(b)" "|" "CANCELLED(c)")))
-        (defun ha-org-clock-todo-change ()
-            "Called from hook `org-after-todo-state-change-hook'.
-        Clock in if a task changes to DOING (i.e. IN_PROGRESS),
-        and clocks out with any other state change."
-            (if (string= org-state "DOING")
-                (org-clock-in)
-            (org-clock-out-if-current)))
-
-        (add-hook 'org-after-todo-state-change-hook 'ha-org-clock-todo-change)
-        (setq org-confirm-babel-evaluate nil
-                org-src-fontify-natively t
-                org-src-tab-acts-natively t
-                org-src-window-setup 'current-window))
+        org-html-validation-link nil))
 
 (use-package org-bullets
   :ensure t
