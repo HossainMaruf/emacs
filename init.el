@@ -333,7 +333,6 @@
 
 (dt/leader-keys
     "SPC" '(counsel-M-x :wk "Counsel M-x")
-    "." '(find-file :wk "Find file")
     "=" '(perspective-map :wk "Perspective") ;; Lists all the perspective keybindings
     "TAB TAB" '(comment-line :wk "Comment lines")
     "u" '(universal-argument :wk "Universal argument"))
@@ -383,6 +382,7 @@
 
   (dt/leader-keys
     "f" '(:ignore t :wk "Files")
+    "f f" '(find-file :wk "Find file")
     "f c" '((lambda () (interactive)
               (find-file "~/.config/emacs/config.org"))
             :wk "Open emacs config.org")
