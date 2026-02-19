@@ -31,6 +31,7 @@
 
 ;; (setq visible-bell t)
 (setq doc-view-continuous t)
+(setq display-line-numbers-type 'relative)
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
