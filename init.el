@@ -248,15 +248,21 @@
   :ensure t
   :if (display-graphic-p))
 
+;; Directory Operations
 (use-package dired
   :ensure nil
   :bind (:map dired-mode-map
-             ("C-c C-e" . wdired-change-to-wdired-mode))
-  :init
-  (setq dired-dwim-target t
-        dired-recursive-copies 'top
-        dired-recursive-deletes 'top
-        dired-listing-switches "-alh"))
+             ("C-c C-p" . wdired-change-to-wdired-mode))
+  :config
+  ;; Guess a default target directory
+  (setq dired-dwim-target t)
+
+  ;; Always delete and copy recursively
+  (setq dired-recursive-deletes 'always
+        dired-recursive-copies 'always)
+
+  ;; Show directory first
+  (setq dired-listing-switches "-alh --group-directories-first"))
 
 (use-package all-the-icons-dired
   :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
@@ -494,10 +500,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(all-the-icons-dired all-the-icons-ivy-rich company counsel dashboard
-                         doom-modeline evil-collection general
-                         key-chord lsp-java org-bullets projectile)))
+ '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
