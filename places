@@ -1,0 +1,30 @@
+;;; -*- coding: utf-8; mode: lisp-data -*-
+(("/home/maruf/.emacs.d/init.el" . 322)
+ ("/home/maruf/.emacs.d/ido.last" . 5097)
+ ("/home/maruf/Programming/" . 384)
+ ("/home/maruf/Programming/BrowserWeb.war" . 691)
+ ("/home/maruf/Programming/BrowserWeb/"
+  (dired-filename . "/home/maruf/Programming"))
+ ("/home/maruf/Programming/BrowserWeb/index.html" . 107)
+ ("/home/maruf/Programming/BrowserWeb/scripts/"
+  (dired-filename
+   . "/home/maruf/Programming/BrowserWeb/scripts/dynamicHtml.js"))
+ ("/home/maruf/Programming/BrowserWeb/scripts/commandline.js" . 1493)
+ ("/home/maruf/Programming/RTGS/src/main/java/com/jbl/ConfigLoader.java"
+  . 741)
+ ("/home/maruf/Programming/RTGS/src/main/java/com/jbl/Main.java" . 811)
+ ("/home/maruf/.emacs.d/images/"
+  (dired-filename . "/home/maruf/.emacs.d"))
+ ("/home/maruf/" (dired-filename . "/home/maruf/Downloads"))
+ ("/home/maruf/Downloads/"
+  (dired-filename . "/home/maruf/Downloads/NPCBL_D9H8QM5T.pdf"))
+ ("/home/maruf/Programming/BrowserWeb/scripts/ARC/Fragment.js" . 27434)
+ ("/home/maruf/.emacs.d/"
+  (dired-filename . "/home/maruf/.emacs.d/init.el"))
+ ("/home/maruf/.emacs.d/start.org" . 356)
+ ("/home/maruf/.emacs.d/config.org" . 40665)
+ ("/snap/emacs/current/usr/share/emacs/30.2/etc/DISTRIB" . 609)
+ ("/snap/emacs/current/usr/share/emacs/30.2/etc/NEWS" . 443)
+ ("/home/maruf/Programming/RTGS/"
+  (dired-filename . "/home/maruf/Programming/RTGS/pom.xml"))
+ ("/home/maruf/Programming/RTGS/pom.xml" . 695))

@@ -1,0 +1,34 @@
+exit
+dir -l
+exit
+exit
+git status
+rm - .#init.el
+rm eshell/history 
+rm ido.last 
+rm places 
+git status
+rm .#init.el
+git status
+git restore init.el
+git status
+exit
+git status
+git add init.el
+git commit -m "Basic find files command changed"
+git push
+exit
+git add init.el
+git commmit -m "Org config changed"
+git commit -m "Org config changed"
+git push
+exit
+exit
+git clone --depth=1 https://github.com/torvalds/uemacs.git .
+git clone --depth=1 https://github.com/torvalds/uemacs.git
+exit
+git status
+git add init.el
+git commit -m "Updated config"
+git push
+exit

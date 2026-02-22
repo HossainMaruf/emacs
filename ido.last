@@ -1,0 +1,64 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/home/maruf/" . "Programming/")
+ ("/home/maruf/Programming/" . "Calendar/")
+ ("/home/maruf/.emacs.d/.cache/lsp/" . "xmlls/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/home/maruf/Programming/"
+ "/home/maruf/Programming/uemacs/"
+ "/home/maruf/.emacs.d/"
+ "/home/maruf/Programming/RTGS/"
+ "/home/maruf/Programming/Calendar/"
+ "/home/maruf/Programming/BrowserWeb/jsps/"
+ "/home/maruf/Programming/MyCalendar/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ 
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/home/maruf/Programming/" (27030 55328 914748 156000) "BrowserWeb/" "RTGS/" "./" "../" "irf-auth-token-generation-container_war.ear/" "BrowserWeb.war")
+
+ ("/home/maruf/" (27030 55448 154406 451000) "Documents/" ".bash_history" ".lemminx/" "Music/" "Public/" ".cups/" ".ssh/" ".vimrc" "Templates/" ".bash_logout" ".cache/" ".emacsrc" ".sudo_as_admin_successful" ".bashrc" "Videos/" ".wget-hsts" "./" "bin" ".vscode/" ".xinputrc" ".dotnet/" ".npm/" ".gnupg/" ".mysql_history" ".pki/" "Downloads/" "Desktop/" ".local/" ".m2/" ".config/" ".rest-client/" ".java/" ".elfeed/" ".viminfo" "lib" "Programming/" ".lesshst" "../" ".emacs.d/" ".candidate-selections.json" "Pictures/" ".gitconfig" ".git-credentials" "snap/" ".profile")
+
+ ("/home/maruf/Programming/uemacs/" (27030 51975 154559 635000) "posix.o" "isearch.o" "Makefile" "pklock.c" "eval.c" "line.o" "utf8.o" "globals.c" "utf8.h" "shell.cmd" "pklock.o" "window.c" "wrapper.c" "usage.h" "isearch.c" "emacs.rc" "display.c" "globals.o" "random.c" "edef.h" "epath.h" "names.o" "word.c" "version.o" "bind.o" "tcap.o" "file.c" "UTF-8-demo.txt" "readme.39e" "README.md" "./" "evar.h" "word.o" "buffer.o" "buffer.c" "bind.c" "emacs.ps" "region.c" "README" "lock.c" "basic.c" "LICENSE" "fileio.o" ".git/" "emacs.hlp" "usage.o" "lock.o" "basic.o" "estruct.h" "posix.c" "ebind.h" "region.o" ".gitignore" "wrapper.o" "em" "version.c" "tcap.c" "version.h" "spawn.o" "line.h" "wrapper.h" "exec.o" "input.c" "search.o" "main.c" "spawn.c" "../" "utf8.c" "input.o" "search.c" "util.h" "usage.c" "exec.c" "efunc.h" "display.o" "random.o" "fileio.c" "file.o" "names.c" "window.o" "eval.o" "main.o" "line.c")
+
+ ("/home/maruf/.emacs.d/" (27030 45441 498949 898000) "elpa/" "projects" "recentf" "eln-cache/" "early-init.el" "url/" "eshell/" ".cache/" "config.org" "./" "images/" "tramp" ".git/" "init.el" "workspace/" "scripts/" ".gitignore" "auto-save-list/" "projectile-bookmarks.eld" ".lsp-session-v1" "transient/" "places" "../" "eclipse.jdt.ls/" "ltximg/" "ido.last" "start.org")
+
+ ("/home/maruf/Programming/RTGS/" (27029 26194 749788 909000) "target/" "./" ".classpath" "pom.xml" "../" ".settings/" "dependency-reduced-pom.xml" ".project" "src/")
+
+ ("/home/maruf/Programming/RTGS/src/main/java/com/jbl/" (27030 39524 391599 734000) "./" "ConfigLoader.java" "Main.java" "../")
+
+ ("/home/maruf/Programming/RTGS/src/" (26980 58934 0 0) "./" "main/" "../")
+
+ ("/home/maruf/Programming/RTGS/src/main/" (26981 7556 0 0) "./" "resources/" "java/" "../")
+
+ ("/home/maruf/Programming/RTGS/src/main/java/" (26980 57982 0 0) "com/" "./" "../")
+
+ ("/home/maruf/Programming/RTGS/src/main/java/com/" (26980 58388 0 0) "./" "jbl/" "../")
+
+ ("/home/maruf/Programming/Calendar/" (27027 6318 448728 335000) "main.py" "./" "../" "main.cpp")
+
+ ("/home/maruf/Programming/BrowserWeb/photos/" (26374 33180 0 0) "0005343821.00" "0004645229.00" "0004645129.00" "./" "RETIREMENT.JPG" "0002155355.00" "0005846090.00" "0002859697.00" "../" "0002044634.00")
+
+ ("/home/maruf/Programming/BrowserWeb/" (26998 60360 641299 232000) "jsps/" "photos/" "nochangeFields.xml" "work/" "WEB-INF/" "./" "transforms/" "tabIndexParameters.xml" "index.html" "robots.txt" "META-INF/" "im.images/" "scripts/" "portal/" "loginPageLinks.xml" "helpParameters.xml" "../" "help/" "html/" "plaf/" "browserParameters.xml" "components/" "version.xml" "doc/")
+
+ ("/home/maruf/Programming/BrowserWeb/jsps/" (26999 22160 674114 51000) "changePin.jsp" "auth_error.jsp" "ADFSError.jsp" "RSANewPin.jsp" "about.jsp" "context.jsp" "transaction_error.jsp" "ldapLogin.jsp" "transaction_pin.jsp" "change_success.jsp" "fileUpload.jsp" "userId.jsp" "./" "error.jsp" "noServiceError.jsp" "timeout.jsp" "logout.jsp" "continue.jsp" "customMessage.jsp" "helprequest.jsp" "formLogin.jsp" "submitWindow.jsp" "ldapRedirect.jsp" "authentication_error.jsp" "RSANextToken.jsp" "SecurityError.jsp" "formError.jsp" "change_expired_password.jsp" "svgInstall.jsp" "400.jsp" "enqrequest.jsp" "blankPage.jsp" "txnrequest.jsp" "changePassword.jsp" "dropdown.jsp" "../" "transaction_abort.jsp" "FilterError.jsp" "RSAAuthentication.jsp" "genDocRequest.jsp" "loggedout.jsp" "transaction_password.jsp" "genrequest.jsp")
+
+ ("/home/maruf/Programming/MyCalendar/" (27027 4987 152642 228000) "main.py" "./" "../" "main.cpp" "a.out")
+
+ ("/home/maruf/.emacs.d/.cache/lsp/xmlls/" (27027 2748 275742 15000) "./" "org.eclipse.lemminx-uber.jar" "../")
+
+ ("/home/maruf/.emacs.d/.cache/lsp/" (27027 2695 801031 696000) "xmlls/" "./" "../" "eclipse.jdt.ls/")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t

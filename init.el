@@ -7,7 +7,7 @@
     (menu-bar-mode -1)
     (tool-bar-mode -1)
     (scroll-bar-mode -1)
-    (set-fringe-mode 20)
+    (set-fringe-mode 5)
     (global-display-line-numbers-mode 1)
     (electric-pair-mode 1)
     (hl-line-mode 1)
@@ -479,7 +479,7 @@
     "w H" '(buf-move-left :wk "Buffer move left")
     "w J" '(buf-move-down :wk "Buffer move down")
     "w K" '(buf-move-up :wk "Buffer move up")
-    "w L" '(buf-move-right :wk "Buffer move right")
+    "w l" '(buf-move-right :wk "Buffer move right")
     ;; Words
     "w d" '(downcase-word :wk "Downcase word")
     "w u" '(upcase-word :wk "Upcase word")
