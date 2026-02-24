@@ -1,0 +1,38 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/home/maruf/Programming/Online-Exam-Website-client/src/" . "apiCalls/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/home/maruf/Programming/AttendanceSystem/src/main/java/com/maruf/attendance/"
+ "/home/maruf/Programming/Online-Exam-Website-client/src/apiCalls/reducers/"
+ "/home/maruf/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ 
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/home/maruf/Programming/AttendanceSystem/src/main/java/com/maruf/attendance/" (27033 45456 759070 386000) "Employee.java" "../" "Attendance.java" "Student.java" ".#Editor.ipynb" "./")
+
+ ("/home/maruf/Programming/Online-Exam-Website-client/src/" (27033 37927 705491 270000) "pages/" "../" "apiCalls/" "context/" "App.js" "index.css" "./" "index.js" "apps/" "layouts/" "components/")
+
+ ("/home/maruf/Programming/Online-Exam-Website-client/src/apiCalls/reducers/" (27033 37804 302196 961000) "questionReducer.js" "postReducer.js" "uiReducer.js" "../" "examReducer.js" "userReducer.js" "categoryReducer.js" "./" "index.js" "authReducer.js")
+
+ ("/home/maruf/Programming/Online-Exam-Website-client/src/pages/" (27033 18247 183776 292000) "Login.js" "../" "Home.js" "Contact.js" "exam/" "Converter.js" "Error.js" "dashboard/" "blog/" "./" "About.js" "Register.js")
+
+ ("/home/maruf/Programming/Online-Exam-Website-client/src/apiCalls/" (26941 43479 69132 800000) "calls/" "../" "actions.js" "question.js" "exam.js" "./" "user.js" "reducers/" "auth.js" "post.js" "endpoints.js")
+
+ ("/home/maruf/Programming/Online-Exam-Website-client/" (26939 47525 945259 100000) "public/" "postcss.config.js" "src/" "../" "node_modules/" "README.md" "package.json" "tailwind.config.js" "_redirects" ".git/" "netlify.toml" ".gitignore" "./" "package-lock.json")
+
+ ("/home/maruf/" (27032 26614 623310 430000) ".vimrc" ".dotnet/" ".git-credentials" "Programming/" ".bash_logout" "Desktop/" "../" ".m2/" ".profile" ".gnupg/" ".vscode/" ".node_repl_history" ".bashrc" "Music/" "Pictures/" "Downloads/" ".cache/" ".pki/" ".sudo_as_admin_successful" "Public/" ".gitconfig" ".local/" ".ssh/" "Videos/" "snap/" "./" ".emacs.d/" ".config/" ".authinfo" ".wget-hsts" "Templates/" ".bash_history" ".lesshst" "Documents/" ".npm/")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t

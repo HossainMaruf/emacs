@@ -1,0 +1,6 @@
+exit
+git status
+clear
+clear
+python3 Editor.py
+dir

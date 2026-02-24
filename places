@@ -1,0 +1,63 @@
+;;; -*- coding: utf-8; mode: lisp-data -*-
+(("/home/maruf/Pictures/" (dired-filename . "/home/maruf/Pictures/.."))
+ ("/home/maruf/Videos/" (dired-filename . "/home/maruf/Videos/.."))
+ ("/home/maruf/Downloads/"
+  (dired-filename . "/home/maruf/Downloads/.."))
+ ("/home/maruf/Downloads/Hell.or.High.Water.2016__1080p.BRrip__BDPLEX.mkv"
+  . 4379)
+ ("/home/maruf/" (dired-filename . "/home/maruf/Programming"))
+ ("/home/maruf/Programming/"
+  (dired-filename
+   . "/home/maruf/Programming/Online-Exam-Website-client"))
+ ("/home/maruf/Programming/Online-Exam-Website-client/src/pages/Home.js"
+  . 198)
+ ("/home/maruf/Programming/Online-Exam-Website-client/"
+  (dired-filename
+   . "/home/maruf/Programming/Online-Exam-Website-client/src"))
+ ("/home/maruf/Programming/Online-Exam-Website-client/src/"
+  (dired-filename
+   . "/home/maruf/Programming/Online-Exam-Website-client/src/App.js"))
+ ("/home/maruf/Programming/Online-Exam-Website-client/src/apiCalls/actions.js"
+  . 1675)
+ ("/home/maruf/Programming/Online-Exam-Website-client/src/apiCalls/auth.js"
+  . 65)
+ ("/home/maruf/Programming/Online-Exam-Website-client/src/apiCalls/reducers/"
+  (dired-filename
+   . "/home/maruf/Programming/Online-Exam-Website-client/src/apiCalls/reducers/userReducer.js"))
+ ("/home/maruf/Programming/Online-Exam-Website-client/src/apiCalls/reducers/authReducer.js"
+  . 504)
+ ("/home/maruf/Programming/Online-Exam-Website-client/src/App.js"
+  . 509)
+ ("/home/maruf/Programming/AttendanceSystem/"
+  (dired-filename . "/home/maruf/Programming/AttendanceSystem/src"))
+ ("/home/maruf/Programming/AttendanceSystem/src/"
+  (dired-filename
+   . "/home/maruf/Programming/AttendanceSystem/src/main"))
+ ("/home/maruf/Programming/AttendanceSystem/src/main/"
+  (dired-filename
+   . "/home/maruf/Programming/AttendanceSystem/src/main/java"))
+ ("/home/maruf/Programming/AttendanceSystem/src/main/java/"
+  (dired-filename
+   . "/home/maruf/Programming/AttendanceSystem/src/main/java/com"))
+ ("/home/maruf/Programming/AttendanceSystem/src/main/java/com/"
+  (dired-filename
+   . "/home/maruf/Programming/AttendanceSystem/src/main/java/com/maruf"))
+ ("/home/maruf/Programming/AttendanceSystem/src/main/java/com/maruf/"
+  (dired-filename
+   . "/home/maruf/Programming/AttendanceSystem/src/main/java/com/maruf/attendance"))
+ ("/home/maruf/Programming/AttendanceSystem/src/main/java/com/maruf/attendance/Attendance.java"
+  . 201)
+ ("/home/maruf/Programming/AttendanceSystem/src/main/java/com/maruf/attendance/"
+  (dired-filename
+   . "/home/maruf/Programming/AttendanceSystem/src/main/java/com/maruf/attendance/Attendance.java"))
+ ("/home/maruf/Programming/AttendanceSystem/src/main/java/com/maruf/attendance/Editor.ipynb"
+  . 105)
+ ("/home/maruf/.emacs.d/ido.last" . 2277)
+ ("/home/maruf/.emacs.d/init.el" . 2845)
+ ("/home/maruf/.emacs.d/" (dired-filename . "/home/maruf"))
+ ("/home/maruf/Programming/AttendanceSystem/target/"
+  (dired-filename . "/home/maruf/Programming/AttendanceSystem"))
+ ("/home/maruf/Programming/AttendanceSystem/src/main/java/com/maruf/attendance/Employee.java"
+  . 75)
+ ("/home/maruf/Programming/AttendanceSystem/src/main/java/com/maruf/attendance/Student.java"
+  . 203))
