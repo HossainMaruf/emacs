@@ -443,7 +443,7 @@
   ;; set for us, so no need to specify each individually.
   (dt/leader-keys
     "p" '(projectile-command-map :wk "Projectile"))
-  
+
   (dt/leader-keys
     "r" '(:ignore t :wk "Radio")
     "r p" '(eradio-play :wk "Eradio play")
@@ -494,7 +494,9 @@
     "w =" '(count-words :wk "Count words/lines for buffer"))
 )
 
-(use-package lsp-mode :hook ((lsp-mode . lsp-enable-which-key-integration)))
+(use-package lsp-mode
+  ;; :hook((python-mode . lsp)))
+  (dt/leader-keys)
 (use-package lsp-java :config (add-hook 'java-mode-hook 'lsp))
 
 (custom-set-variables
