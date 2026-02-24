@@ -4,10 +4,12 @@
     ;; (setq initial-scratch-message "")
     ;; (setq initial-major-mode 'fundamental-mode)
     ;; (setq inhibit-splash-screen t)
+    (context-menu-mode 1)
     (menu-bar-mode -1)
     (tool-bar-mode -1)
     (scroll-bar-mode -1)
-    (set-fringe-mode 20)
+    (horizontal-scroll-bar-mode -1)
+    (set-fringe-mode 5)
     (global-display-line-numbers-mode 1)
     (electric-pair-mode 1)
     (hl-line-mode 1)
@@ -248,15 +250,23 @@
   :ensure t
   :if (display-graphic-p))
 
+;; Directory Operations
 (use-package dired
   :ensure nil
   :bind (:map dired-mode-map
-             ("C-c C-e" . wdired-change-to-wdired-mode))
-  :init
-  (setq dired-dwim-target t
-        dired-recursive-copies 'top
-        dired-recursive-deletes 'top
-        dired-listing-switches "-alh"))
+             ("C-c C-p" . wdired-change-to-wdired-mode))
+  :config
+  ;; Guess a default target directory
+  (setq dired-dwim-target t)
+
+  ;; Always delete and copy recursively
+  (setq dired-recursive-deletes 'always
+        dired-recursive-copies 'always)
+
+  (setq delete-by-moving-to-trash t)
+
+  ;; Show directory first
+  (setq dired-listing-switches "-alh --group-directories-first"))
 
 (use-package all-the-icons-dired
   :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
@@ -435,7 +445,7 @@
   ;; set for us, so no need to specify each individually.
   (dt/leader-keys
     "p" '(projectile-command-map :wk "Projectile"))
-  
+
   (dt/leader-keys
     "r" '(:ignore t :wk "Radio")
     "r p" '(eradio-play :wk "Eradio play")
@@ -479,7 +489,7 @@
     "w H" '(buf-move-left :wk "Buffer move left")
     "w J" '(buf-move-down :wk "Buffer move down")
     "w K" '(buf-move-up :wk "Buffer move up")
-    "w L" '(buf-move-right :wk "Buffer move right")
+    "w l" '(buf-move-right :wk "Buffer move right")
     ;; Words
     "w d" '(downcase-word :wk "Downcase word")
     "w u" '(upcase-word :wk "Upcase word")
