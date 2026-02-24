@@ -263,6 +263,8 @@
   (setq dired-recursive-deletes 'always
         dired-recursive-copies 'always)
 
+  (setq delete-by-moving-to-trash t)
+
   ;; Show directory first
   (setq dired-listing-switches "-alh --group-directories-first"))
 
@@ -494,9 +496,7 @@
     "w =" '(count-words :wk "Count words/lines for buffer"))
 )
 
-(use-package lsp-mode
-  ;; :hook((python-mode . lsp)))
-  (dt/leader-keys)
+(use-package lsp-mode :hook ((lsp-mode . lsp-enable-which-key-integration)))
 (use-package lsp-java :config (add-hook 'java-mode-hook 'lsp))
 
 (custom-set-variables
