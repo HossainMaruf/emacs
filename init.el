@@ -377,6 +377,26 @@
   ;; (nerd-icons-font-family "Symbols Nerd Font Mono")
   )
 
+;; extra functions
+(add-to-list 'load-path
+             (expand-file-name "defuns" user-emacs-directory))
+
+;; extra macros
+(add-to-list 'load-path
+             (expand-file-name "macros" user-emacs-directory))
+
+;; extra major/minor modes
+(add-to-list 'load-path
+             (expand-file-name "modes" user-emacs-directory))
+
+;; language specific setup
+(add-to-list 'load-path
+             (expand-file-name "lang" user-emacs-directory))
+
+;; other configuration
+(add-to-list 'load-path
+             (expand-file-name "config" user-emacs-directory))
+
 (use-package general
   :config
   (general-evil-setup)
