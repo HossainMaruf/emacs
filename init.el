@@ -1,11 +1,47 @@
-;; Startup Disabled Some GUI Elements
+;; Emacs Configuration
 
-;; (setq inhibit-startup-message t)
-;; (setq initial-scratch-message "")
-;; (setq initial-major-mode 'fundamental-mode)
-;; (setq inhibit-splash-screen t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Change Some Default Settings ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; General Settings
+(setq user-full-name "Maruf Hossain")									  	    ; Hi Emacs, I'm Maruf
+(defun display-startup-echo-area-message () (message "Hey, Welcome"))       	; change the default startup echo message
+(setq gc-cons-threshold (* 500 1024 1024))									  	; increase the threshold for garbage collection - 100 MB
+(setq delete-old-versions -1)												  	; delete excess backup versions silently
+(setq version-control t)													  	; use version control for backups
+(setq backup-directory-alist `(("." . "~/.emacs.d/backups")))				  	; which directory to put backups file
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))	; transform backups file name
+; (setq inhibit-startup-screen t)											  	; inhibit useless and old-school startup screen
+; (setq inhibit-startup-message t)
+; (setq initial-scratch-message "")
+; (setq initial-major-mode 'fundamental-mode)
+; (setq inhibit-splash-screen t)
+(setq visible-bell nil)														  	; no visible bell for errors
+(setq ring-bell-function 'ignore)											  	; silent bell when you make a mistake
+(setq coding-system-for-read 'utf-8)										  	; use utf-8 by default for reading
+(setq coding-system-for-write 'utf-8)										  	; use utf-8 by default for writing
+(setq sentence-end-double-space nil)										  	; sentence SHOULD end with only a point.
+(setq-default fill-column 80)													; toggle wrapping text at the 80th character
+(setq initial-major-mode 'fundamental-mode)                                     ; set the mode of the initial scratch buffer
+(setq initial-scratch-message "")           								  	; print nothing and leave screen at insert mode
+(setq-default truncate-lines t)												  	; if line exceeds screen, let it
+(setq large-file-warning-threshold (* 15 1024 1024))						  	; increase threshold for large files
+(setq-default abbrev-mode t)												  	; turn on abbreviations by default
+(setq recenter-positions '(top middle bottom))								  	; recenter from the top instead of the middle
+(setq ns-use-native-fullscreen nil)											  	; don't use the native fullscreen - more useful in a Mac
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))		  	; setup a new custom file
+(setq enable-recursive-minibuffers t)										  	; use the minibuffer while using the minibuffer
+(setq echo-keystrokes 0.05)													  	; when to echo keystrokes
+(setq-default ibuffer-expert t)												    ; don't ask confirmation when deleting unmodified buffers
+(setq frame-resize-pixelwise t)												    ; resize based on pixels to remove annoying gaps
+(setq imenu-auto-rescan t)												        ; rescan automatically for new tags
+(setq recentf-max-saved-items 1000											  	; set the number of recent items to be saved
+      recentf-exclude '("/tmp/" "/ssh:"))									  	; exclude the temporary and remote files accessed recently
+(menu-bar-mode -1)															  	; deactivate the menubar
+(tooltip-mode -1)															  	; deactivate the tooltip
+(blink-cursor-mode -1)														  	; don't blink the cursor
 (context-menu-mode 1)
-(menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (horizontal-scroll-bar-mode -1)
@@ -19,6 +55,15 @@
 (recentf-mode 1)
 (winner-mode 1)
 (windmove-default-keybindings)
+(fset 'yes-or-no-p 'y-or-n-p)												  	; prompt for 'y' or 'n' instead of 'yes' or 'no'
+(put 'narrow-to-region 'disabled nil)										  	; enable narrowing to region
+(put 'narrow-to-defun 'disabled nil)										  	; enable narrowing to function
+(when (fboundp 'winner-mode)												  	; when you can find 'winner-mode'
+  (winner-mode 1))															  	; activate winner mode
+(when (file-exists-p custom-file)											  	; if the custom file exists
+  (load custom-file :noerror :nomessage))									  	; load the custom file but don't show any messages or errors
+(put 'scroll-left 'disabled nil)											  	; enable sideward scrolling
+(define-key minibuffer-local-map (kbd "C-w") 'backward-kill-word)			  	; backward kill word in minibuffer
 
 ;; Initial Window
 (setq initial-frame-alist
@@ -52,6 +97,59 @@
 
 (global-set-key [escape] 'keyboard-escape-quit)
 (set-face-attribute 'default nil :font "Monaco" :height 180 :weight 'regular)
+
+;; how tabs are seen and added
+(setq-default tab-width 4)
+(setq-default tab-stop-list
+			  '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80))
+
+;; how to interpret the command key and the option key on a Mac
+(when (eq system-type 'darwin)
+  (setq mac-command-key-is-meta nil)
+  ;; (setq mac-command-modifier 'meta)
+  (setq mac-option-key-is-meta t)
+  (setq mac-option-modifier 'meta))
+
+;; General frame size and configuration plus Linux HiDPI hacks
+(when (display-graphic-p)
+  (tool-bar-mode -1)															  	; deactivate the toolbar
+  (cond ((eq system-type 'gnu/linux)                 ; if system is GNU/Linux
+		 (when (display-graphic-p)
+		   (scroll-bar-mode -1)
+		   (set-frame-font "Monaco"))
+		 (setq initial-frame-alist													  	; initial frame size
+			   '((width . 100)														  	; characters in a line
+				 (height . 45)))													  	; number of lines
+		 (setq default-frame-alist													  	; subsequent frame size
+			   '((width . 100)														  	; characters in a line
+				 (height . 45))))
+		((eq system-type 'darwin)                    ; if system is macOS
+		 ;; (mac-auto-operator-composition-mode)        ; ligature support
+		 ;; (set-frame-font "Fira Code")
+		 (setq initial-frame-alist													  	; initial frame size
+			   '((width . 100)														  	; characters in a line
+				 (height . 45)))													  	; number of lines
+		 (setq default-frame-alist													  	; subsequent frame size
+			   '((width . 100)														  	; characters in a line
+				 (height . 45)))													  	; number of lines
+		 (when (display-graphic-p)
+		   (scroll-bar-mode -1)))
+		((eq system-type 'windows-nt)                ; if system is Windows
+		 (set-frame-font "Monaco")
+		 (setq initial-frame-alist													  	; initial frame size
+			   '((width . 100)														  	; characters in a line
+				 (height . 45)))													  	; number of lines
+		 (setq default-frame-alist													  	; subsequent frame size
+			   '((width . 100)														  	; characters in a line
+				 (height . 45)))													  	; number of lines
+		 (when (display-graphic-p)
+		   (scroll-bar-mode -1)))))
+
+;; dummy function
+(defun sk/nothing ()
+  "Sends a message saying nothing mapped"
+  (interactive)
+  (message "Nothing mapped!"))
 
 (add-hook 'prog-mode-hook
           (lambda ()
