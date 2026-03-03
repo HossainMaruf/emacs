@@ -65,17 +65,6 @@
 (put 'scroll-left 'disabled nil)											  	; enable sideward scrolling
 (define-key minibuffer-local-map (kbd "C-w") 'backward-kill-word)			  	; backward kill word in minibuffer
 
-;; Initial Window
-(setq initial-frame-alist
-      '((width . 102)   ; characters in a line
-        (height . 54))) ; number of lines
-
-
-;; Subsequent Frame
-(setq default-frame-alist
-      '((width . 100)   ; characters in a line
-        (height . 52))) ; number of lines
-
 ;; (setq visible-bell t)
 (setq doc-view-continuous t)
 (setq display-line-numbers-type 'relative)
@@ -96,7 +85,7 @@
 (defalias 'list-buffers 'ibuffer-other-window)
 
 (global-set-key [escape] 'keyboard-escape-quit)
-(set-face-attribute 'default nil :font "Monaco" :height 180 :weight 'regular)
+(set-face-attribute 'default nil :font "Monaco" :height 130 :weight 'regular)
 
 ;; how tabs are seen and added
 (setq-default tab-width 4)
@@ -351,51 +340,19 @@
 ;; Directory Operations
 (use-package dired
   :ensure nil
+  :init
+  (setq dired-dwim-target t
+        dired-recursive-copies 'always
+        dired-recursive-deletes 'always
+        delete-by-moving-to-trash t
+        dired-listing-switches "-alh --group-directories-first")
   :bind (:map dired-mode-map
-             ("C-c C-p" . wdired-change-to-wdired-mode))
-  :config
-  ;; Guess a default target directory
-  (setq dired-dwim-target t)
-
-  ;; Always delete and copy recursively
-  (setq dired-recursive-deletes 'always
-        dired-recursive-copies 'always)
-
-  (setq delete-by-moving-to-trash t)
-
-  ;; Show directory first
-  (setq dired-listing-switches "-alh --group-directories-first"))
+             ("C-c C-p" . wdired-change-to-wdired-mode)))
 
 (use-package all-the-icons-dired
   :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
 
-(use-package nerd-icons
-  ;; :custom
-  ;; The Nerd Font you want to use in GUI
-  ;; "Symbols Nerd Font Mono" is the default and is recommended
-  ;; but you can use any other Nerd Font if you want
-  ;; (nerd-icons-font-family "Symbols Nerd Font Mono")
-  )
-
-;; extra functions
-(add-to-list 'load-path
-             (expand-file-name "defuns" user-emacs-directory))
-
-;; extra macros
-(add-to-list 'load-path
-             (expand-file-name "macros" user-emacs-directory))
-
-;; extra major/minor modes
-(add-to-list 'load-path
-             (expand-file-name "modes" user-emacs-directory))
-
-;; language specific setup
-(add-to-list 'load-path
-             (expand-file-name "lang" user-emacs-directory))
-
-;; other configuration
-(add-to-list 'load-path
-             (expand-file-name "config" user-emacs-directory))
+(use-package nerd-icons)
 
 (use-package general
   :config
