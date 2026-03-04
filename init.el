@@ -7,6 +7,8 @@
 ;; General Settings
 (setq user-full-name "Maruf Hossain")									  	    ; Hi Emacs, I'm Maruf
 (defun display-startup-echo-area-message () (message "Hey, Welcome"))       	; change the default startup echo message
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+(setq default-frame-alist '((fullscreen . maximized)))
 (setq gc-cons-threshold (* 500 1024 1024))									  	; increase the threshold for garbage collection - 100 MB
 (setq delete-old-versions -1)												  	; delete excess backup versions silently
 (setq version-control t)													  	; use version control for backups
@@ -88,57 +90,8 @@
 (set-face-attribute 'default nil :font "Monaco" :height 130 :weight 'regular)
 
 ;; how tabs are seen and added
-(setq-default tab-width 4)
-(setq-default tab-stop-list
-			  '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80))
-
-;; how to interpret the command key and the option key on a Mac
-(when (eq system-type 'darwin)
-  (setq mac-command-key-is-meta nil)
-  ;; (setq mac-command-modifier 'meta)
-  (setq mac-option-key-is-meta t)
-  (setq mac-option-modifier 'meta))
-
-;; General frame size and configuration plus Linux HiDPI hacks
-(when (display-graphic-p)
-  (tool-bar-mode -1)															  	; deactivate the toolbar
-  (cond ((eq system-type 'gnu/linux)                 ; if system is GNU/Linux
-		 (when (display-graphic-p)
-		   (scroll-bar-mode -1)
-		   (set-frame-font "Monaco"))
-		 (setq initial-frame-alist													  	; initial frame size
-			   '((width . 100)														  	; characters in a line
-				 (height . 45)))													  	; number of lines
-		 (setq default-frame-alist													  	; subsequent frame size
-			   '((width . 100)														  	; characters in a line
-				 (height . 45))))
-		((eq system-type 'darwin)                    ; if system is macOS
-		 ;; (mac-auto-operator-composition-mode)        ; ligature support
-		 ;; (set-frame-font "Fira Code")
-		 (setq initial-frame-alist													  	; initial frame size
-			   '((width . 100)														  	; characters in a line
-				 (height . 45)))													  	; number of lines
-		 (setq default-frame-alist													  	; subsequent frame size
-			   '((width . 100)														  	; characters in a line
-				 (height . 45)))													  	; number of lines
-		 (when (display-graphic-p)
-		   (scroll-bar-mode -1)))
-		((eq system-type 'windows-nt)                ; if system is Windows
-		 (set-frame-font "Monaco")
-		 (setq initial-frame-alist													  	; initial frame size
-			   '((width . 100)														  	; characters in a line
-				 (height . 45)))													  	; number of lines
-		 (setq default-frame-alist													  	; subsequent frame size
-			   '((width . 100)														  	; characters in a line
-				 (height . 45)))													  	; number of lines
-		 (when (display-graphic-p)
-		   (scroll-bar-mode -1)))))
-
-;; dummy function
-(defun sk/nothing ()
-  "Sends a message saying nothing mapped"
-  (interactive)
-  (message "Nothing mapped!"))
+;; (setq-default tab-width 4)
+;; (setq-default tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80))
 
 (add-hook 'prog-mode-hook
           (lambda ()
@@ -353,6 +306,21 @@
   :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
 
 (use-package nerd-icons)
+
+;; Force xref results to appear in left window
+(add-to-list 'display-buffer-alist
+             '("\\*xref\\*"
+               (display-buffer-reuse-window display-buffer-in-side-window)
+               (side . left)
+               (window-width . 0.4)))
+
+;; When jumping to definition, always use other window
+(setq xref-show-definitions-function #'xref-show-definitions-buffer
+      xref-show-xrefs-function #'xref-show-definitions-buffer)
+
+;; Enable auto-follow
+(add-hook 'xref--xref-buffer-mode-hook
+          #'next-error-follow-minor-mode)
 
 (use-package general
   :config
