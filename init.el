@@ -315,8 +315,8 @@
                (window-width . 0.4)))
 
 ;; When jumping to definition, always use other window
-(setq xref-show-definitions-function #'xref-show-definitions-buffer
-      xref-show-xrefs-function #'xref-show-definitions-buffer)
+;(setq xref-show-definitions-function #'xref-show-definitions-buffer
+;      xref-show-xrefs-function #'xref-show-definitions-buffer)
 
 ;; Enable auto-follow
 (add-hook 'xref--xref-buffer-mode-hook
