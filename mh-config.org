@@ -72,6 +72,12 @@ This leads to a lot of clutter, so let's tell Emacs to put all backups that it c
     :config (which-key-mode))
 #+end_src
 
+* MAGIT
+#+begin_src emacs-lisp
+  (use-package magit
+    :ensure t)
+#+end_src
+
 #+begin_src emacs-lisp
   (use-package org
     :mode (("\\.org" . org-mode))
@@ -87,10 +93,10 @@ This leads to a lot of clutter, so let's tell Emacs to put all backups that it c
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package org-bullets
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+    (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+end_src
 
 #+begin_src emacs-lisp
