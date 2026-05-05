@@ -546,3 +546,8 @@ Of course, if you set alpha to '0', the background of Emacs would completely tra
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(alpha-background . 100)) ; For all new frames henceforth
 #+end_src
+
+* THEME
+#+begin_src emacs-lisp
+  (load-theme 'wombat t)
+#+end_src
