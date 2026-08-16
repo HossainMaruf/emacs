@@ -576,3 +576,32 @@
 #+begin_src emacs-lisp
   (use-package lsp-java :config (add-hook 'java-mode-hook 'lsp))
 #+end_src
+
+* PROTO BUFFER
+#+begin_src emacs-lisp
+  (use-package protobuf-mode
+  :ensure t
+  :mode ("\\.proto\\'" . protobuf-mode))
+#+end_src
+
+* GO
+#+begin_src emacs-lisp
+  (use-package go-mode
+    :ensure t
+    :mode "\\.go\\'"
+    :hook (go-mode . eglot-ensure)
+    :config
+    ;; Automatically format code and organize imports on save
+    (add-hook 'before-save-hook #'eglot-format-buffer nil t)
+    (add-hook 'before-save-hook #'eglot-code-action-organize-imports nil t))
+#+end_src
+
+* EGLOT
+#+begin_src emacs-lisp
+  (use-package eglot
+    :ensure nil ; Built-in in Emacs 29+
+    :config
+    ;; Ensure Eglot knows where to find gopls if it's not in the default system PATH
+    (add-to-list 'eglot-server-programs
+                 '(go-mode . ("gopls"))))
+#+end_src
