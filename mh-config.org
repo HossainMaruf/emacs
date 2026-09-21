@@ -148,6 +148,17 @@
     :ensure t)
 #+end_src
 
+* GIT TIMEMACHINE
+#+begin_src emacs-lisp
+  (use-package git-timemachine
+    :after git-timemachine
+    :hook (evil-normalize-keymaps . git-timemachine-hook)
+    :config
+      (evil-define-key 'normal git-timemachine-mode-map (kbd "C-j") 'git-timemachine-show-previous-revision)
+      (evil-define-key 'normal git-timemachine-mode-map (kbd "C-k") 'git-timemachine-show-next-revision)
+  )
+#+end_src
+
 * ORG
 #+begin_src emacs-lisp
   (use-package org
@@ -274,6 +285,19 @@
   :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
 #+end_src
 
+* PEEP DIRED
+#+begin_src emacs-lisp
+  (use-package peep-dired
+    :after dired
+    :hook (evil-normalize-keymaps . peep-dired-hook)
+    :config
+      (evil-define-key 'normal dired-mode-map (kbd "h") 'dired-up-directory)
+      (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file) ; use dired-find-file instead if not using dired-open package
+      (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
+      (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file)
+  )
+#+end_src
+
 * PERSPECTIVE
 #+begin_src emacs-lisp
     (use-package perspective
@@ -368,7 +392,7 @@
       "d n" '(neotree-dir :wk "Open directory in neotree")
       "d p" '(peep-dired :wk "Peep-dired")
       "d w" '(wdired-change-to-wdired-mode :wk "Writable dired")
-  	  "d m" '(delete-pair :wk "Delete mathing pair"))
+      "d m" '(delete-pair :wk "Delete mathing pair"))
 
     (mh/leader-keys
       "e" '(:ignore t :wk "Ediff/Eshell/Eval/EWW")
