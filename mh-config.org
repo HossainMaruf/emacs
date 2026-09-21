@@ -15,13 +15,16 @@
   (winner-mode 1)
   (ido-mode 1)
   (set-fringe-mode 5)
-  (hl-line-mode 1)
+  (hl-line-mode -1)
   (electric-pair-mode 1)
   (electric-indent-mode 1)
   (show-paren-mode 1)
   (flymake-mode 1)
   (fset 'yes-or-no-p 'y-or-n-p)
   (global-display-line-numbers-mode 1)
+  (setq auto-save-default t)
+  (setq auto-save-interval 300)
+  (setq auto-save-timeout 30)
   (setq compilation-scroll-output t)
   (setq display-line-numbers-type 'relative)
   (setq make-backup-files nil)
@@ -571,7 +574,10 @@
       "j a" '(dap-breakpoint-toggle :wk "Toggle breakpoint")
       "j d" '(dap-breakpoint-delete-all :wk "Delete all breakpoint")
       "j D" '(dap-disconnect :wk "Disconnect debugger")
-      "j n" '(dap-next :wk "Step into"))
+      "j n" '(dap-next :wk "Step into")
+      "j w" '(avy-goto-word-0 :wk "Goto word")
+      "j l" '(avy-goto-line :wk "Goto line")
+      "j c" '(avy-goto-char-in-line :wk "Goto char in line"))
   )
 #+end_src
 
@@ -645,4 +651,22 @@
     ;; Ensure Eglot knows where to find gopls if it's not in the default system PATH
     (add-to-list 'eglot-server-programs
                  '(go-mode . ("gopls"))))
+#+end_src
+
+* AVY
+#+begin_src emacs-lisp
+  (use-package avy
+    :ensure t
+    :diminish avy-mode
+    :config (setq avy-all-windows nil))
+#+end_src
+
+* ORDERLESS
+#+begin_src emacs-lisp
+  (use-package orderless
+    :ensure t
+    :config
+    (setq completion-styles '(orderless basic))
+    (setq completion-category-defaults nil)
+    (setq completion-category-overrides nil))
 #+end_src
