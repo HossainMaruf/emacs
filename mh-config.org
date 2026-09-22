@@ -360,11 +360,11 @@
   (mh/leader-keys
       "SPC" '(counsel-M-x :wk "Counsel M-x")
       "=" '(perspective-map :wk "Perspective") ;; Lists all the perspective keybindings
-      "TAB TAB" '(comment-line :wk "Comment lines")
       "u" '(universal-argument :wk "Universal argument"))
 
   (mh/leader-keys
     "c" '(compile :wk "Compile Current Buffer")
+    "TAB" '(comment-line :wk "Comment lines")
     "]" '(next-error :wk "Next Error")
     "[" '(previous-error :wk "Previous Error"))
 
@@ -493,19 +493,13 @@
     (mh/leader-keys
       "m" '(:ignore t :wk "Org")
       "m a" '(org-agenda :wk "Org agenda")
+      "m b" '(org-table-insert-hline :wk "Insert hline in table")
+      "m B" '(org-babel-tangle :wk "Org babel tangle")
       "m e" '(org-export-dispatch :wk "Org export dispatch")
       "m i" '(org-toggle-item :wk "Org toggle item")
       "m t" '(org-todo :wk "Org todo")
-      "m B" '(org-babel-tangle :wk "Org babel tangle")
-      "m T" '(org-todo-list :wk "Org todo list"))
-
-    (mh/leader-keys
-      "m b" '(:ignore t :wk "Tables")
-      "m b -" '(org-table-insert-hline :wk "Insert hline in table"))
-
-    (mh/leader-keys
-      "m d" '(:ignore t :wk "Date/deadline")
-      "m d t" '(org-time-stamp :wk "Org time stamp"))
+      "m T" '(org-todo-list :wk "Org todo list")
+      "m d" '(org-time-stamp :wk "Org time stamp"))
 
     (mh/leader-keys
       "o" '(:ignore t :wk "Open")
@@ -520,11 +514,13 @@
       "p" '(projectile-command-map :wk "Projectile"))
 
     (mh/leader-keys
-      "r" '(:ignore t :wk "Radio")
-      "r p" '(eradio-play :wk "Eradio play")
-      "r s" '(eradio-stop :wk "Eradio stop")
-      "r t" '(eradio-toggle :wk "Eradio toggle"))
-
+      "r" '(:ignore t :wk "Multiple Cursor")
+      "r r" '(evil-mc-make-all-cursors :wk "Make all cursors")
+      "r n" '(evil-mc-make-and-goto-next-match :wk "Next match")
+      "r p" '(evil-mc-make-and-goto-prev-match :wk "Prev match")
+      "r ." '(evil-mc-skip-and-goto-next-match :wk "Skip match")
+      "r q" '(evil-mc-undo-all-cursors :wk "Undo all")
+      "r u" '(evil-mc-undo-last-added-cursor :wk "Undo last"))
 
     (mh/leader-keys
       "s" '(:ignore t :wk "Search")
@@ -564,8 +560,6 @@
       "w K" '(buf-move-up :wk "Buffer move up")
       "w L" '(buf-move-right :wk "Buffer move right")
       ;; Words
-      "w d" '(downcase-word :wk "Downcase word")
-      "w u" '(upcase-word :wk "Upcase word")
       "w =" '(count-words :wk "Count words/lines for buffer"))
 
     (mh/leader-keys
@@ -602,7 +596,7 @@
 
 * THEME
 #+begin_src emacs-lisp
-    (load-theme 'wombat t)
+    ;; (load-theme 'wombat t)
 #+end_src
 
 * LSP
